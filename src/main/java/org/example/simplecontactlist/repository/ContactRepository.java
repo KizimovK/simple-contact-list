@@ -1,0 +1,80 @@
+package org.example.simplecontactlist.repository;
+
+import lombok.extern.slf4j.Slf4j;
+import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.exception.ContactNotFoundException;
+import org.example.simplecontactlist.repository.mapper.ContactRowMapper;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapperResultSetExtractor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+
+@Component
+@Slf4j
+public class ContactRepository implements Repository<Contact>{
+    private final JdbcTemplate jdbcTemplate;
+
+    public ContactRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public long insert(Contact contact) {
+        log.debug("Calling ContactRepository -> insert with contact: {}",contact);
+        contact.setId(System.currentTimeMillis());
+        String sql = "INSERT INTO contacts (id, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql,
+                contact.getId(),
+                contact.getFirstName(),
+                contact.getLastName(),
+                contact.getPhone(),
+                contact.getEmail());
+        return contact.getId();
+    }
+    @Override
+    public Optional<Contact> selectById(long id) {
+        log.debug("Calling ContactRepository -> selectById with ID{}",id);
+        String sql = "SELECT * FROM contact WHERE id = ?";
+        Contact contact = DataAccessUtils.singleResult(
+                jdbcTemplate.query(
+                        sql,
+                        new ArgumentPreparedStatementSetter(new Object[]{id}),
+                        new RowMapperResultSetExtractor<>(new ContactRowMapper(),1))
+        );
+        return Optional.ofNullable(contact);
+    }
+    @Override
+    public List<Contact> selectAll() {
+        log.debug("Calling ContactRepository -> selectAll");
+        String sql = "SELECT * FROM contact";
+        return jdbcTemplate.query(sql, new ContactRowMapper());
+    }
+
+    @Override
+    public Contact update(Contact contact) {
+        log.debug("Calling ContactRepository -> update with contact {}", contact);
+        Contact existedContact = selectById(contact.getId()).orElse(null);
+        if (existedContact != null){
+            String sql = "UPDATE contact SET first_name = ?, last_name = ?, phone = ?, email = ? WHERE id = ?";
+            jdbcTemplate.update(sql,
+                    contact.getFirstName(),
+                    contact.getLastName(),
+                    contact.getPhone(),
+                    contact.getEmail(),
+                    contact.getId());
+            return contact;
+        }
+        log.warn("Contact with id {} not found!", contact.getId());
+        throw new ContactNotFoundException("Contact not found for update! ID = " + contact.getId());
+    }
+    @Override
+    public void removeById(long id) {
+        log.debug("Calling ContactRepository -> removeById with id: {}", id);
+        String sql = "DELETE FROM contact WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+}

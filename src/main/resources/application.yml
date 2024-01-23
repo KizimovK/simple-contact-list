@@ -5,3 +5,8 @@ spring:
     password: postgres
     hikari:
       schema: contacts_schema
+
+
+logging:
+  level:
+    root: debug

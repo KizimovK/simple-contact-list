@@ -4,18 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.simplecontactlist.entitites.Contact;
 import org.example.simplecontactlist.exception.ContactNotFoundException;
 import org.example.simplecontactlist.repository.mapper.ContactRowMapper;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 @Slf4j
-public class ContactRepository implements Repository<Contact>{
+public class ContactRepository implements MyRepository<Contact> {
     private final JdbcTemplate jdbcTemplate;
 
     public ContactRepository(JdbcTemplate jdbcTemplate) {
@@ -26,7 +28,7 @@ public class ContactRepository implements Repository<Contact>{
     public long insert(Contact contact) {
         log.debug("Calling ContactRepository -> insert with contact: {}",contact);
         contact.setId(System.currentTimeMillis());
-        String sql = "INSERT INTO contacts (id, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO contact (id, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 contact.getId(),
                 contact.getFirstName(),

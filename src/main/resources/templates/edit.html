@@ -6,8 +6,9 @@
     <title>Simple List Contacts</title>
 </head>
 <body>
-<h1>Create Contact</h1>
-<form action="/contact/create" method="post">
+<h1>Edit Contact</h1>
+<form action="/contact/edit" method="post">
+    <input type="hidden" name="id" th:value="${contact.id}">
     <div>
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstName" required th:value="${contact.firstName}">

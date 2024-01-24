@@ -9,29 +9,34 @@ import java.util.List;
 
 @Service
 public class ContactServiceImpl implements ContactService{
-    private final MyRepository repository;
+    private final MyRepository myRepository;
 
-    public ContactServiceImpl(MyRepository repository) {
-        this.repository = repository;
+    public ContactServiceImpl(MyRepository myRepository) {
+        this.myRepository = myRepository;
     }
     public List<Contact> selectAll(){
-        return new ArrayList<>(repository.selectAll());
+        return new ArrayList<>(myRepository.selectAll());
     }
 
     @Override
     public Contact selectContact(long id) {
-        return (Contact) repository.selectById(id).orElse(null);
+        return (Contact) myRepository.selectById(id).orElse(null);
     }
 
     @Override
     public long addContact(Contact contact) {
         contact.setId(System.currentTimeMillis());
-        return repository.insert(contact);
+        return myRepository.insert(contact);
     }
 
     @Override
     public void deleteContact(long id) {
-        repository.removeById(id);
+        myRepository.removeById(id);
+    }
+
+    @Override
+    public Contact updateContact(Contact contact) {
+        return (Contact) myRepository.update(contact);
     }
 
 

@@ -10,4 +10,6 @@ public interface ContactService {
     long addContact(Contact contact);
 
     void deleteContact(long id);
+
+   Contact updateContact(Contact contact);
 }

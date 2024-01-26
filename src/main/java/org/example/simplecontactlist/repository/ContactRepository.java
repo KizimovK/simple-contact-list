@@ -7,11 +7,14 @@ import org.example.simplecontactlist.repository.mapper.ContactRowMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,5 +81,27 @@ public class ContactRepository implements MyRepository<Contact> {
         log.debug("Calling ContactRepository -> removeById with id: {}", id);
         String sql = "DELETE FROM contact WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public void batchInsert(List<Contact> contacts) {
+        log.debug("Calling ContactRepository -> batchInsert");
+        String sql = "INSERT INTO contact (id, first_name, last_name, phone, email) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                Contact contact = contacts.get(i);
+                ps.setLong(1,contact.getId());
+                ps.setString(2, contact.getFirstName());
+                ps.setString(3, contact.getLastName());
+                ps.setString(4, contact.getPhone());
+                ps.setString(5,contact.getEmail());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return contacts.size();
+            }
+        });
     }
 }

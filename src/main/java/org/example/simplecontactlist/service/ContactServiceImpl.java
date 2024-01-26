@@ -28,7 +28,6 @@ public class ContactServiceImpl implements ContactService{
         contact.setId(System.currentTimeMillis());
         return myRepository.insert(contact);
     }
-
     @Override
     public void deleteContact(long id) {
         myRepository.removeById(id);
@@ -37,6 +36,11 @@ public class ContactServiceImpl implements ContactService{
     @Override
     public Contact updateContact(Contact contact) {
         return (Contact) myRepository.update(contact);
+    }
+
+    @Override
+    public void addListContact(List<Contact> contactList) {
+        myRepository.batchInsert(contactList);
     }
 
 

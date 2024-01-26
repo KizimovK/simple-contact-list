@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<body>
+<header class="Footer" th:fragment="footerFragmant">
+
+    <div class="container">
+        <div class="row">
+            <hr>
+            <div class="col-sm-12 col-md-6">
+                <h6>About</h6>
+                <p class="text-justify">Практическая работа №3 по образовательному Spring Framework от компании Skillbox.
+                    Приложение по управлению списком контактов.
+                 Программа показывает основные возможности Spring MVC, JdbcTemplate,
+                    а так же реализован простейший интерфейс на основе шаблонизатора Thymeleaf</p>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <ul class="footer-links">
+                    <li><a th:href="@{/}">Simple Contact List</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by
+                    Simple Code Ltd.
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>

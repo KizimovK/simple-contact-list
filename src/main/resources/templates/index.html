@@ -5,7 +5,8 @@
     <title>Simple List Contacts</title>
 </head>
 <body>
-<h1>List Contacts</h1>
+<header th:replace="~{fragment/header_fragment.html :: headerFragmant}"></header>
+<div>
 <table>
     <thead>
     <tr>
@@ -31,5 +32,7 @@
     </tbody>
 </table>
 <a href="/contact/create">Create Contact</a>
+</div>
+<footer th:replace="~{fragment/footer_fragment.html :: footerFragmant}"></footer>
 </body>
 </html>

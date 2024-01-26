@@ -9,4 +9,5 @@ public interface MyRepository<T> {
     List<T> selectAll();
     T update(T entity);
     void removeById(long id);
+    void batchInsert(List<T> tList);
 }

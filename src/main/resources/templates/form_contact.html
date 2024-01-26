@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <title>Simple List Contacts</title>
 </head>
 <body>
-<h1>Edit Contact</h1>
-<form action="/contact/edit" method="post">
+<div>
+<header th:replace="~{fragment/header_fragment.html :: headerFragmant}"></header>
+<h2 th:text="'Contact '+${action}"></h2>
+<form th:action="@{/contact/action(${action})}" method="post">
     <input type="hidden" name="id" th:value="${contact.id}">
     <div>
         <label for="firstname">First Name:</label>
@@ -27,6 +28,7 @@
     </div>
     <button type="submit">Save</button>
 </form>
+</div>
+<footer th:replace="~{fragment/footer_fragment.html :: footerFragmant}"></footer>
 </body>
-
 </html>

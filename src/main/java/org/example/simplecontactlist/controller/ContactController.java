@@ -30,11 +30,12 @@ public class ContactController {
 
     @GetMapping("/contact/create")
     public String showCreateContactForm(Model model) {
+        model.addAttribute("action","create");
         model.addAttribute("contact", new Contact());
-        return "create";
+        return "form_contact";
     }
 
-    @PostMapping("/contact/create")
+    @PostMapping(value = "/contact/action", params = "create")
     public String createContact(@ModelAttribute Contact contact) {
         contactService.addContact(contact);
         return "redirect:/";
@@ -44,12 +45,13 @@ public class ContactController {
     public String showEditContactForm(@PathVariable long id, Model model) {
         Contact contact = contactService.selectContact(id);
         if (contact != null) {
+            model.addAttribute("action","edit");
             model.addAttribute("contact", contact);
-            return "edit";
+            return "form_contact";
         }
         return "redirect:/";
     }
-    @PostMapping("/contact/edit")
+    @PostMapping(value = "/contact/action", params = "edit")
     public String editContact(@ModelAttribute Contact contact){
         contactService.updateContact(contact);
         return "redirect:/";

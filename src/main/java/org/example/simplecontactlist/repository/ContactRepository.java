@@ -1,16 +1,14 @@
 package org.example.simplecontactlist.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.entity.Contact;
 import org.example.simplecontactlist.exception.ContactNotFoundException;
 import org.example.simplecontactlist.repository.mapper.ContactRowMapper;
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapperResultSetExtractor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;

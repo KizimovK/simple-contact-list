@@ -1,7 +1,7 @@
 package org.example.simplecontactlist.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.entity.Contact;
 import org.example.simplecontactlist.service.ContactServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

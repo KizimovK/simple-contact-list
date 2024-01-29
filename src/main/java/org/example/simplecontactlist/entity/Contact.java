@@ -1,7 +1,6 @@
-package org.example.simplecontactlist.entitites;
+package org.example.simplecontactlist.entity;
 
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 @Data
 public class Contact {

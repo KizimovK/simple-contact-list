@@ -1,6 +1,6 @@
 package org.example.simplecontactlist.repository.mapper;
 
-import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.entity.Contact;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

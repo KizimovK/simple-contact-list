@@ -1,6 +1,6 @@
 package org.example.simplecontactlist.service;
 
-import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.entity.Contact;
 import org.example.simplecontactlist.repository.ContactRepository;
 import org.springframework.stereotype.Service;
 

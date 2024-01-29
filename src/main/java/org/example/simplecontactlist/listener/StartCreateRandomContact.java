@@ -3,7 +3,7 @@ package org.example.simplecontactlist.listener;
 
 import io.github.serpro69.kfaker.Faker;
 import lombok.extern.slf4j.Slf4j;
-import org.example.simplecontactlist.entitites.Contact;
+import org.example.simplecontactlist.entity.Contact;
 import org.example.simplecontactlist.service.ContactService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,7 +31,7 @@ public class StartCreateRandomContact {
         log.info("Calling StartCreateContact -> random create  {} contacts", amountContact);
         Faker faker =new Faker();
         List<Contact> contactList = new ArrayList<>();
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < amountContact; i++){
             Contact contact = new Contact();
             contact.setId(System.currentTimeMillis());
             try {
